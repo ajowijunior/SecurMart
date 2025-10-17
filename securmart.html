@@ -28,6 +28,104 @@
             background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
             transform: translateY(-1px);
         }
+        
+        /* Mobile Menu Styles */
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        .hamburger {
+            cursor: pointer;
+            padding: 4px;
+        }
+        
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: #374151;
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .hero-gradient {
+                padding: 3rem 0;
+            }
+            
+            .hero-gradient h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-gradient p {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+            
+            .service-card {
+                margin-bottom: 1rem;
+            }
+            
+            .grid {
+                gap: 1rem;
+            }
+            
+            .max-w-7xl {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .text-5xl {
+                font-size: 2.5rem;
+            }
+            
+            .text-3xl {
+                font-size: 1.875rem;
+            }
+            
+            .py-16 {
+                padding-top: 2rem;
+                padding-bottom: 2rem;
+            }
+            
+            .py-20 {
+                padding-top: 3rem;
+                padding-bottom: 3rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-gradient h1 {
+                font-size: 2rem;
+            }
+            
+            .text-xl {
+                font-size: 1rem;
+            }
+            
+            .px-8 {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50 font-sans">
@@ -37,13 +135,14 @@
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
-                        <h1 class="text-2xl font-bold text-red-600">🛡️ SecurMart</h1>
+                        <h1 class="text-xl md:text-2xl font-bold text-red-600">🛡️ SecurMart</h1>
                     </div>
                 </div>
                 
+                <!-- Desktop Navigation -->
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="#" class="nav-link text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="#" class="nav-link text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium" onclick="showPage('homepage')">Home</a>
                         
                         <!-- Services Dropdown -->
                         <div class="relative group">
@@ -89,11 +188,64 @@
                     </div>
                 </div>
                 
-                <div class="flex items-center space-x-4">
+                <!-- Mobile menu button and cart -->
+                <div class="flex items-center space-x-2 md:hidden">
+                    <a href="#" class="text-gray-700 hover:text-red-600 text-sm" onclick="showPage('cart')">Cart (0)</a>
+                    <button onclick="toggleMobileMenu()" class="hamburger" id="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+                
+                <!-- Desktop admin link -->
+                <div class="hidden md:flex items-center space-x-4">
                     <button onclick="showPage('admin-login')" class="text-xs text-gray-500 hover:text-red-600">Admin</button>
                 </div>
             </div>
         </div>
+        
+        <!-- Mobile Navigation Menu -->
+        <div class="mobile-menu fixed inset-y-0 left-0 w-64 bg-white shadow-lg z-50 md:hidden" id="mobileMenu">
+            <div class="p-4">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-lg font-bold text-red-600">Menu</h2>
+                    <button onclick="toggleMobileMenu()" class="text-gray-500">✕</button>
+                </div>
+                
+                <div class="space-y-1">
+                    <a href="#" onclick="showPage('homepage'); closeMobileMenu()" class="block px-4 py-3 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Home</a>
+                    
+                    <!-- Services Section -->
+                    <div class="border-t border-gray-200 pt-2 mt-2">
+                        <p class="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Services</p>
+                        <a href="#" onclick="showPage('products'); closeMobileMenu()" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">All Services</a>
+                        <a href="#" onclick="showPage('product-details', 'german-shepherd'); closeMobileMenu()" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Guard Dogs</a>
+                        <a href="#" onclick="showPage('product-details', 'security-guard'); closeMobileMenu()" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Security Guards</a>
+                        <a href="#" onclick="showPage('product-details', 'cctv-system'); closeMobileMenu()" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Surveillance Systems</a>
+                    </div>
+                    
+                    <a href="#" onclick="showPage('search'); closeMobileMenu()" class="block px-4 py-3 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Search</a>
+                    
+                    <!-- Account Section -->
+                    <div class="border-t border-gray-200 pt-2 mt-2">
+                        <p class="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Account</p>
+                        <a href="#" onclick="showPage('profile'); closeMobileMenu()" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">My Profile</a>
+                        <a href="#" onclick="showPage('orders'); closeMobileMenu()" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">My Orders</a>
+                        <a href="#" onclick="showPage('track-order'); closeMobileMenu()" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Track Orders</a>
+                        <a href="#" onclick="showPage('login'); closeMobileMenu()" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Login</a>
+                        <a href="#" onclick="showPage('register'); closeMobileMenu()" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Register</a>
+                    </div>
+                    
+                    <div class="border-t border-gray-200 pt-2 mt-2">
+                        <a href="#" onclick="showPage('admin-login'); closeMobileMenu()" class="block px-4 py-2 text-gray-500 hover:bg-red-50 hover:text-red-600 rounded-md text-sm">Admin Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu overlay -->
+        <div class="mobile-overlay fixed inset-0 bg-black bg-opacity-50 z-40 hidden" id="mobileOverlay" onclick="closeMobileMenu()"></div>
     </nav>
 
     <!-- Main Content Container -->
@@ -702,6 +854,27 @@
             }
         ];
 
+        // Mobile menu functionality
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileOverlay = document.getElementById('mobileOverlay');
+            const hamburger = document.getElementById('hamburger');
+            
+            mobileMenu.classList.toggle('open');
+            mobileOverlay.classList.toggle('hidden');
+            hamburger.classList.toggle('active');
+        }
+        
+        function closeMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileOverlay = document.getElementById('mobileOverlay');
+            const hamburger = document.getElementById('hamburger');
+            
+            mobileMenu.classList.remove('open');
+            mobileOverlay.classList.add('hidden');
+            hamburger.classList.remove('active');
+        }
+
         // Page navigation
         function showPage(pageId, productId = null) {
             // Hide all pages
@@ -721,6 +894,9 @@
                     performSearch();
                 }
             }
+            
+            // Close mobile menu when navigating
+            closeMobileMenu();
         }
 
         // Product details
@@ -829,7 +1005,9 @@
             }
             
             // Update cart count in navigation
-            document.querySelector('nav a[onclick="showPage(\'cart\')"]').textContent = `Cart (${cart.reduce((sum, item) => sum + item.quantity, 0)})`;
+            const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.querySelector('nav a[onclick="showPage(\'cart\')"]').textContent = `Cart (${cartCount})`;
+            document.querySelector('.md\\:hidden a[onclick="showPage(\'cart\')"]').textContent = `Cart (${cartCount})`;
         }
 
         function updateQuantity(productId, change) {
@@ -939,5 +1117,5 @@
             updateCartDisplay();
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98ff9d87d2af3e99',t:'MTc2MDcwMjIxNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99000445b0fcea48',t:'MTc2MDcwNjQyMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
