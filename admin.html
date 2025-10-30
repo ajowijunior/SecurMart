@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal - SecurMart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Admin Navigation -->
+    <nav class="bg-red-600 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl md:text-2xl font-bold">🛡️ SecurMart Admin</h1>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#" class="hover:text-red-200 px-3 py-2 rounded-md text-sm font-medium" onclick="showPage('admin-dashboard')">Dashboard</a>
+                        <a href="#" class="hover:text-red-200 px-3 py-2 rounded-md text-sm font-medium" onclick="showPage('admin-vendors')">Vendors</a>
+                        <a href="#" class="hover:text-red-200 px-3 py-2 rounded-md text-sm font-medium" onclick="showPage('admin-customers')">Customers</a>
+                        <a href="#" class="hover:text-red-200 px-3 py-2 rounded-md text-sm font-medium" onclick="showPage('admin-orders')">Orders</a>
+                        <a href="#" class="hover:text-red-200 px-3 py-2 rounded-md text-sm font-medium" onclick="showPage('admin-analytics')">Analytics</a>
+                    </div>
+                </div>
+                
+                <!-- Portal Links -->
+                <div class="flex items-center space-x-4">
+                    <a href="user.html" class="text-xs hover:text-red-200">Client Portal</a>
+                    <a href="vendor.html" class="text-xs hover:text-red-200">Vendor Portal</a>
+                    <a href="user.html" class="hover:text-red-200 text-sm">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div id="main-content">
+        <!-- Admin Dashboard -->
+        <div id="admin-dashboard" class="page-content">
+            <div class="p-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Admin Dashboard</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-lg font-semibold text-gray-700">Total Orders</h3>
+                        <p class="text-3xl font-bold text-red-600">156</p>
+                        <p class="text-sm text-green-600">+12% from last month</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-lg font-semibold text-gray-700">Active Services</h3>
+                        <p class="text-3xl font-bold text-red-600">89</p>
+                        <p class="text-sm text-green-600">+8% from last month</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-lg font-semibold text-gray-700">Total Customers</h3>
+                        <p class="text-3xl font-bold text-red-600">234</p>
+                        <p class="text-sm text-green-600">+15% from last month</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-lg font-semibold text-gray-700">Monthly Revenue</h3>
+                        <p class="text-3xl font-bold text-red-600">$45,600</p>
+                        <p class="text-sm text-green-600">+22% from last month</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-lg font-semibold mb-4">Recent Orders</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center py-2 border-b">
+                                <div>
+                                    <p class="font-medium">Order #SM-2024-156</p>
+                                    <p class="text-sm text-gray-600">Security Guard Service</p>
+                                </div>
+                                <span class="text-green-600 font-semibold">$1,200</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b">
+                                <div>
+                                    <p class="font-medium">Order #SM-2024-155</p>
+                                    <p class="text-sm text-gray-600">CCTV Installation</p>
+                                </div>
+                                <span class="text-green-600 font-semibold">$2,500</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-lg font-semibold mb-4">Platform Performance</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span>Active Vendors</span>
+                                <span class="font-semibold">15</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Service Categories</span>
+                                <span class="font-semibold">8</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Platform Commission</span>
+                                <span class="font-semibold">15%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6">
+                            <h4 class="font-semibold mb-2">Quick Actions</h4>
+                            <div class="flex space-x-2">
+                                <button onclick="showPage('admin-vendors')" class="btn-primary text-white px-4 py-2 rounded text-sm">Manage Vendors</button>
+                                <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded text-sm">View Reports</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vendor Management -->
+        <div id="admin-vendors" class="page-content hidden">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Vendor Management</h2>
+                    <button class="btn-primary text-white px-4 py-2 rounded hover:bg-red-700">Add New Vendor</button>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vendor</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Services</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rating</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="text-2xl mr-3">🛡️</div>
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">SecureGuard Inc.</div>
+                                            <div class="text-sm text-gray-500">contact@secureguard.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">Guard Dogs, Security Guards</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <div class="flex items-center">
+                                        <span class="text-yellow-500">★★★★★</span>
+                                        <span class="ml-1">(128)</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button class="text-red-600 hover:text-red-900 mr-3">Edit</button>
+                                    <button class="text-red-600 hover:text-red-900">View Details</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="text-2xl mr-3">🐕</div>
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">K9 Protection</div>
+                                            <div class="text-sm text-gray-500">info@k9protection.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">Guard Dogs</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <div class="flex items-center">
+                                        <span class="text-yellow-500">★★★★★</span>
+                                        <span class="ml-1">(94)</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button class="text-red-600 hover:text-red-900 mr-3">Edit</button>
+                                    <button class="text-red-600 hover:text-red-900">View Details</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="text-2xl mr-3">📹</div>
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">VisionTech Security</div>
+                                            <div class="text-sm text-gray-500">sales@visiontech.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">Surveillance Systems</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <div class="flex items-center">
+                                        <span class="text-yellow-500">★★★★☆</span>
+                                        <span class="ml-1">(76)</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button class="text-red-600 hover:text-red-900 mr-3">Edit</button>
+                                    <button class="text-red-600 hover:text-red-900">View Details</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer Management -->
+        <div id="admin-customers" class="page-content hidden">
+            <div class="p-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Customer Management</h2>
+                
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Orders</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-gray-900">John Smith</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">john.smith@email.com</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+1 (555) 123-4567</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">5</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button class="text-red-600 hover:text-red-900">View Details</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-gray-900">Sarah Johnson</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">sarah.j@email.com</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+1 (555) 987-6543</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">3</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button class="text-red-600 hover:text-red-900">View Details</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Management -->
+        <div id="admin-orders" class="page-content hidden">
+            <div class="p-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Order Management</h2>
+                
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vendor</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Service</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#SM-2024-156</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">John Smith</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">SecureGuard Inc.</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Guard Dog Service</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$600</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button class="text-red-600 hover:text-red-900">View Details</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#SM-2024-155</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Sarah Johnson</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">VisionTech Security</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">CCTV Installation</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$1,500</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button class="text-red-600 hover:text-red-900">View Details</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics -->
+        <div id="admin-analytics" class="page-content hidden">
+            <div class="p-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Platform Analytics</h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-lg font-semibold mb-4">Revenue Overview</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <p class="text-sm text-gray-600">Total Platform Revenue</p>
+                                <p class="text-2xl font-bold text-red-600">$45,600</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">Platform Commission (15%)</p>
+                                <p class="text-xl font-semibold">$6,840</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-lg font-semibold mb-4">Service Distribution</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span>Guard Dogs</span>
+                                <span class="font-semibold">45% of orders</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Security Guards</span>
+                                <span class="font-semibold">35% of orders</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Surveillance Systems</span>
+                                <span class="font-semibold">20% of orders</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Page navigation for admin portal
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.classList.add('hidden');
+            });
+            
+            // Show selected page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+            }
+        }
+
+        // Initialize admin portal
+        document.addEventListener('DOMContentLoaded', function() {
+            showPage('admin-dashboard');
+        });
+    </script>
+</body>
+</html>
