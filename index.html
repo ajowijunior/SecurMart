@@ -106,6 +106,35 @@
             max-height: 500px;
         }
         
+        /* Location Filter Styles */
+        .location-filter {
+            background: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+        
+        .location-badge {
+            display: inline-flex;
+            align-items: center;
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            margin: 0.25rem;
+        }
+        
+        .location-badge button {
+            margin-left: 0.5rem;
+            background: none;
+            border: none;
+            color: #dc2626;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
         /* Mobile Responsive Styles */
         @media (max-width: 768px) {
             .hero-gradient {
@@ -211,6 +240,35 @@
 
                 <!-- Right side - Account management and cart -->
                 <div class="flex items-center space-x-4">
+                    <!-- Location Filter Button -->
+                    <div class="relative group">
+                        <button class="nav-link text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium flex items-center" onclick="toggleLocationFilter()">
+                            <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            Location
+                        </button>
+                        <div class="absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-4" id="locationDropdown">
+                            <h4 class="font-semibold mb-2">Filter by County</h4>
+                            <select id="countySelect" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm mb-3">
+                                <option value="">Select a county</option>
+                                <option value="nairobi">Nairobi</option>
+                                <option value="mombasa">Mombasa</option>
+                                <option value="kisumu">Kisumu</option>
+                                <option value="nakuru">Nakuru</option>
+                                <option value="kiambu">Kiambu</option>
+                                <option value="meru">Meru</option>
+                                <option value="kakamega">Kakamega</option>
+                                <option value="kisii">Kisii</option>
+                                <option value="nyeri">Nyeri</option>
+                                <option value="machakos">Machakos</option>
+                            </select>
+                            <button onclick="applyLocationFilter()" class="w-full bg-red-600 text-white py-2 rounded-md text-sm hover:bg-red-700">Apply Filter</button>
+                            <button onclick="clearLocationFilter()" class="w-full mt-2 text-gray-600 py-2 rounded-md text-sm hover:bg-gray-100">Clear Filter</button>
+                        </div>
+                    </div>
+
                     <!-- Cart -->
                     <a href="#" class="nav-link text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium hidden md:block" onclick="showPage('cart')">
                         <div class="flex items-center">
@@ -290,6 +348,28 @@
                     <a href="#" onclick="showPage('search'); closeMobileMenu()" class="block px-4 py-3 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Search</a>
                     <a href="#" onclick="showPage('faq'); closeMobileMenu()" class="block px-4 py-3 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">FAQs</a>
                     
+                    <!-- Location Filter in Mobile Menu -->
+                    <div class="border-t border-gray-200 pt-2 mt-2">
+                        <p class="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Location Filter</p>
+                        <div class="px-4 py-2">
+                            <select id="mobileCountySelect" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm mb-2">
+                                <option value="">Select a county</option>
+                                <option value="nairobi">Nairobi</option>
+                                <option value="mombasa">Mombasa</option>
+                                <option value="kisumu">Kisumu</option>
+                                <option value="nakuru">Nakuru</option>
+                                <option value="kiambu">Kiambu</option>
+                                <option value="meru">Meru</option>
+                                <option value="kakamega">Kakamega</option>
+                                <option value="kisii">Kisii</option>
+                                <option value="nyeri">Nyeri</option>
+                                <option value="machakos">Machakos</option>
+                            </select>
+                            <button onclick="applyLocationFilter(); closeMobileMenu();" class="w-full bg-red-600 text-white py-2 rounded-md text-sm hover:bg-red-700 mb-1">Apply Filter</button>
+                            <button onclick="clearLocationFilter(); closeMobileMenu();" class="w-full text-gray-600 py-2 rounded-md text-sm hover:bg-gray-100">Clear Filter</button>
+                        </div>
+                    </div>
+                    
                     <!-- Account Section -->
                     <div class="border-t border-gray-200 pt-2 mt-2">
                         <p class="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Account</p>
@@ -312,6 +392,19 @@
         <div class="mobile-overlay fixed inset-0 bg-black bg-opacity-50 z-40 hidden" id="mobileOverlay" onclick="closeMobileMenu()"></div>
     </nav>
 
+    <!-- Location Filter Display -->
+    <div id="locationFilterDisplay" class="location-filter hidden">
+        <div class="flex flex-col md:flex-row md:items-center justify-between">
+            <div>
+                <span class="font-semibold text-gray-700">Filtering by:</span>
+                <div id="activeLocationFilters" class="inline-block ml-2"></div>
+            </div>
+            <button onclick="clearLocationFilter()" class="mt-2 md:mt-0 text-red-600 hover:text-red-700 text-sm font-medium">
+                Clear All Filters
+            </button>
+        </div>
+    </div>
+
     <!-- Main Content Container -->
     <div id="main-content">
         <!-- Homepage -->
@@ -321,6 +414,10 @@
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h1 class="text-5xl font-bold mb-6">Professional Security Services</h1>
                     <p class="text-xl mb-8 max-w-3xl mx-auto">Protecting what matters most with comprehensive security solutions including guard dogs, professional security personnel, and advanced surveillance systems.</p>
+                    <!-- Location Filter Notice -->
+                    <div class="bg-white bg-opacity-20 rounded-lg p-4 max-w-2xl mx-auto">
+                        <p class="text-sm">📍 Services available across Kenya. Use the location filter to find services in your county.</p>
+                    </div>
                 </div>
             </section>
 
@@ -333,7 +430,7 @@
                             <!-- Vendor cards will be duplicated for seamless animation -->
                             <div class="flex space-x-6">
                                 <!-- Original vendor cards -->
-                                <div class="vendor-card bg-white p-6 rounded-lg shadow-md flex-shrink-0 w-64">
+                                <div class="vendor-card bg-white p-6 rounded-lg shadow-md flex-shrink-0 w-64" data-locations="nairobi,mombasa,kiambu">
                                     <div class="text-4xl mb-4 text-center">🛡️</div>
                                     <h3 class="text-xl font-semibold mb-2 text-center">SecureGuard Inc.</h3>
                                     <p class="text-gray-600 text-sm mb-4 text-center">Specialized in residential security with 15+ years of experience</p>
@@ -341,9 +438,12 @@
                                         <span class="text-yellow-500">★★★★★</span>
                                         <span class="text-gray-600 ml-1">(128)</span>
                                     </div>
+                                    <div class="mt-2 text-center">
+                                        <span class="text-xs text-gray-500">Nairobi, Mombasa, Kiambu</span>
+                                    </div>
                                 </div>
                                 
-                                <div class="vendor-card bg-white p-6 rounded-lg shadow-md flex-shrink-0 w-64">
+                                <div class="vendor-card bg-white p-6 rounded-lg shadow-md flex-shrink-0 w-64" data-locations="nairobi,kisumu,nakuru">
                                     <div class="text-4xl mb-4 text-center">🐕</div>
                                     <h3 class="text-xl font-semibold mb-2 text-center">K9 Protection</h3>
                                     <p class="text-gray-600 text-sm mb-4 text-center">Expert guard dog training and deployment services</p>
@@ -351,9 +451,12 @@
                                         <span class="text-yellow-500">★★★★★</span>
                                         <span class="text-gray-600 ml-1">(94)</span>
                                     </div>
+                                    <div class="mt-2 text-center">
+                                        <span class="text-xs text-gray-500">Nairobi, Kisumu, Nakuru</span>
+                                    </div>
                                 </div>
                                 
-                                <div class="vendor-card bg-white p-6 rounded-lg shadow-md flex-shrink-0 w-64">
+                                <div class="vendor-card bg-white p-6 rounded-lg shadow-md flex-shrink-0 w-64" data-locations="nairobi,mombasa">
                                     <div class="text-4xl mb-4 text-center">📹</div>
                                     <h3 class="text-xl font-semibold mb-2 text-center">VisionTech Security</h3>
                                     <p class="text-gray-600 text-sm mb-4 text-center">Advanced surveillance and monitoring solutions</p>
@@ -361,9 +464,12 @@
                                         <span class="text-yellow-500">★★★★☆</span>
                                         <span class="text-gray-600 ml-1">(76)</span>
                                     </div>
+                                    <div class="mt-2 text-center">
+                                        <span class="text-xs text-gray-500">Nairobi, Mombasa</span>
+                                    </div>
                                 </div>
                                 
-                                <div class="vendor-card bg-white p-6 rounded-lg shadow-md flex-shrink-0 w-64">
+                                <div class="vendor-card bg-white p-6 rounded-lg shadow-md flex-shrink-0 w-64" data-locations="nairobi,kiambu,machakos">
                                     <div class="text-4xl mb-4 text-center">🏢</div>
                                     <h3 class="text-xl font-semibold mb-2 text-center">Corporate Shield</h3>
                                     <p class="text-gray-600 text-sm mb-4 text-center">Enterprise security solutions for businesses</p>
@@ -371,20 +477,26 @@
                                         <span class="text-yellow-500">★★★★★</span>
                                         <span class="text-gray-600 ml-1">(203)</span>
                                     </div>
+                                    <div class="mt-2 text-center">
+                                        <span class="text-xs text-gray-500">Nairobi, Kiambu, Machakos</span>
+                                    </div>
                                 </div>
                                 
-                                <div class="vendor-card bg-white p-6 rounded-lg shadow-md flex-shrink-0 w-64">
+                                <div class="vendor-card bg-white p-6 rounded-lg shadow-md flex-shrink-0 w-64" data-locations="nairobi,kisumu,meru">
                                     <div class="text-4xl mb-4 text-center">🚨</div>
                                     <h3 class="text-xl font-semibold mb-2 text-center">Rapid Response</h3>
                                     <p class="text-gray-600 text-sm mb-4 text-center">24/7 emergency security response teams</p>
                                     <div class="flex justify-center">
                                         <span class="text-yellow-500">★★★★☆</span>
                                         <span class="text-gray-600 ml-1">(67)</span>
+                                    </div>
+                                    <div class="mt-2 text-center">
+                                        <span class="text-xs text-gray-500">Nairobi, Kisumu, Meru</span>
                                     </div>
                                 </div>
                                 
                                 <!-- Duplicate vendor cards for seamless animation -->
-                                <div class="vendor-card bg-white p-6 rounded-lg shadow-md flex-shrink-0 w-64">
+                                <div class="vendor-card bg-white p-6 rounded-lg shadow-md flex-shrink-0 w-64" data-locations="nairobi,mombasa,kiambu">
                                     <div class="text-4xl mb-4 text-center">🛡️</div>
                                     <h3 class="text-xl font-semibold mb-2 text-center">SecureGuard Inc.</h3>
                                     <p class="text-gray-600 text-sm mb-4 text-center">Specialized in residential security with 15+ years of experience</p>
@@ -392,9 +504,12 @@
                                         <span class="text-yellow-500">★★★★★</span>
                                         <span class="text-gray-600 ml-1">(128)</span>
                                     </div>
+                                    <div class="mt-2 text-center">
+                                        <span class="text-xs text-gray-500">Nairobi, Mombasa, Kiambu</span>
+                                    </div>
                                 </div>
                                 
-                                <div class="vendor-card bg-white p-6 rounded-lg shadow-md flex-shrink-0 w-64">
+                                <div class="vendor-card bg-white p-6 rounded-lg shadow-md flex-shrink-0 w-64" data-locations="nairobi,kisumu,nakuru">
                                     <div class="text-4xl mb-4 text-center">🐕</div>
                                     <h3 class="text-xl font-semibold mb-2 text-center">K9 Protection</h3>
                                     <p class="text-gray-600 text-sm mb-4 text-center">Expert guard dog training and deployment services</p>
@@ -402,9 +517,12 @@
                                         <span class="text-yellow-500">★★★★★</span>
                                         <span class="text-gray-600 ml-1">(94)</span>
                                     </div>
+                                    <div class="mt-2 text-center">
+                                        <span class="text-xs text-gray-500">Nairobi, Kisumu, Nakuru</span>
+                                    </div>
                                 </div>
                                 
-                                <div class="vendor-card bg-white p-6 rounded-lg shadow-md flex-shrink-0 w-64">
+                                <div class="vendor-card bg-white p-6 rounded-lg shadow-md flex-shrink-0 w-64" data-locations="nairobi,mombasa">
                                     <div class="text-4xl mb-4 text-center">📹</div>
                                     <h3 class="text-xl font-semibold mb-2 text-center">VisionTech Security</h3>
                                     <p class="text-gray-600 text-sm mb-4 text-center">Advanced surveillance and monitoring solutions</p>
@@ -412,9 +530,12 @@
                                         <span class="text-yellow-500">★★★★☆</span>
                                         <span class="text-gray-600 ml-1">(76)</span>
                                     </div>
+                                    <div class="mt-2 text-center">
+                                        <span class="text-xs text-gray-500">Nairobi, Mombasa</span>
+                                    </div>
                                 </div>
                                 
-                                <div class="vendor-card bg-white p-6 rounded-lg shadow-md flex-shrink-0 w-64">
+                                <div class="vendor-card bg-white p-6 rounded-lg shadow-md flex-shrink-0 w-64" data-locations="nairobi,kiambu,machakos">
                                     <div class="text-4xl mb-4 text-center">🏢</div>
                                     <h3 class="text-xl font-semibold mb-2 text-center">Corporate Shield</h3>
                                     <p class="text-gray-600 text-sm mb-4 text-center">Enterprise security solutions for businesses</p>
@@ -422,15 +543,21 @@
                                         <span class="text-yellow-500">★★★★★</span>
                                         <span class="text-gray-600 ml-1">(203)</span>
                                     </div>
+                                    <div class="mt-2 text-center">
+                                        <span class="text-xs text-gray-500">Nairobi, Kiambu, Machakos</span>
+                                    </div>
                                 </div>
                                 
-                                <div class="vendor-card bg-white p-6 rounded-lg shadow-md flex-shrink-0 w-64">
+                                <div class="vendor-card bg-white p-6 rounded-lg shadow-md flex-shrink-0 w-64" data-locations="nairobi,kisumu,meru">
                                     <div class="text-4xl mb-4 text-center">🚨</div>
                                     <h3 class="text-xl font-semibold mb-2 text-center">Rapid Response</h3>
                                     <p class="text-gray-600 text-sm mb-4 text-center">24/7 emergency security response teams</p>
                                     <div class="flex justify-center">
                                         <span class="text-yellow-500">★★★★☆</span>
                                         <span class="text-gray-600 ml-1">(67)</span>
+                                    </div>
+                                    <div class="mt-2 text-center">
+                                        <span class="text-xs text-gray-500">Nairobi, Kisumu, Meru</span>
                                     </div>
                                 </div>
                             </div>
@@ -618,11 +745,24 @@
                 <div class="bg-white p-6 rounded-lg shadow-md mb-8">
                     <div class="flex flex-col md:flex-row gap-4">
                         <input type="text" id="searchInput" placeholder="Search for security services..." class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
-                        <select class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500">
-                            <option>All Categories</option>
-                            <option>Guard Dogs</option>
-                            <option>Security Guards</option>
-                            <option>Surveillance Systems</option>
+                        <select id="searchCategory" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500">
+                            <option value="">All Categories</option>
+                            <option value="guard-dogs">Guard Dogs</option>
+                            <option value="security-guards">Security Guards</option>
+                            <option value="surveillance">Surveillance Systems</option>
+                        </select>
+                        <select id="searchLocation" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500">
+                            <option value="">All Locations</option>
+                            <option value="nairobi">Nairobi</option>
+                            <option value="mombasa">Mombasa</option>
+                            <option value="kisumu">Kisumu</option>
+                            <option value="nakuru">Nakuru</option>
+                            <option value="kiambu">Kiambu</option>
+                            <option value="meru">Meru</option>
+                            <option value="kakamega">Kakamega</option>
+                            <option value="kisii">Kisii</option>
+                            <option value="nyeri">Nyeri</option>
+                            <option value="machakos">Machakos</option>
                         </select>
                         <button onclick="performSearch()" class="btn-primary text-white px-6 py-2 rounded-lg">Search</button>
                     </div>
@@ -1081,6 +1221,7 @@
         // Global state
         let currentUser = null;
         let cart = [];
+        let currentLocationFilter = '';
         let products = [
             {
                 id: 'german-shepherd',
@@ -1111,7 +1252,7 @@
             }
         ];
 
-        // Vendor services data
+        // Vendor services data with location information
         const vendorServices = {
             'guard-dogs': {
                 title: 'Guard Dog Services',
@@ -1121,6 +1262,7 @@
                         name: 'K9 Protection',
                         rating: '★★★★★',
                         reviewCount: 94,
+                        locations: ['nairobi', 'kisumu', 'nakuru'],
                         services: [
                             { name: 'German Shepherd Protection', price: '$600/month', description: 'Fully trained German Shepherd with certified handler' },
                             { name: 'Rottweiler Security', price: '$550/month', description: 'Professional Rottweiler guard dog service' },
@@ -1134,6 +1276,7 @@
                         name: 'SecureGuard Inc.',
                         rating: '★★★★★',
                         reviewCount: 128,
+                        locations: ['nairobi', 'mombasa', 'kiambu'],
                         services: [
                             { name: 'Executive Protection Dogs', price: '$800/month', description: 'Premium guard dogs for high-security needs' },
                             { name: 'Residential Guard Dogs', price: '$500/month', description: 'Family-friendly protection dogs' },
@@ -1147,6 +1290,7 @@
                         name: 'Rapid Response',
                         rating: '★★★★☆',
                         reviewCount: 67,
+                        locations: ['nairobi', 'kisumu', 'meru'],
                         services: [
                             { name: 'Emergency K9 Response', price: '$750/month', description: 'Rapid deployment guard dog teams' },
                             { name: 'Event Security Dogs', price: '$400/day', description: 'Temporary event protection' },
@@ -1166,6 +1310,7 @@
                         name: 'SecureGuard Inc.',
                         rating: '★★★★★',
                         reviewCount: 128,
+                        locations: ['nairobi', 'mombasa', 'kiambu'],
                         services: [
                             { name: 'Armed Security Guard', price: '$35/hour', description: 'Licensed armed security professional' },
                             { name: 'Unarmed Security Guard', price: '$25/hour', description: 'Trained unarmed security personnel' },
@@ -1179,6 +1324,7 @@
                         name: 'Corporate Shield',
                         rating: '★★★★★',
                         reviewCount: 203,
+                        locations: ['nairobi', 'kiambu', 'machakos'],
                         services: [
                             { name: 'Corporate Security', price: '$30/hour', description: 'Business premises security' },
                             { name: 'Construction Site Security', price: '$28/hour', description: 'Site monitoring and protection' },
@@ -1192,6 +1338,7 @@
                         name: 'Rapid Response',
                         rating: '★★★★☆',
                         reviewCount: 67,
+                        locations: ['nairobi', 'kisumu', 'meru'],
                         services: [
                             { name: 'Emergency Response Team', price: '$40/hour', description: 'Quick deployment security team' },
                             { name: 'Event Security', price: '$32/hour', description: 'Crowd control and event protection' },
@@ -1211,6 +1358,7 @@
                         name: 'VisionTech Security',
                         rating: '★★★★☆',
                         reviewCount: 76,
+                        locations: ['nairobi', 'mombasa'],
                         services: [
                             { name: 'HD CCTV Installation', price: '$1,500', description: 'Complete HD surveillance system' },
                             { name: 'Smart Home Security', price: '$2,200', description: 'Integrated smart security system' },
@@ -1224,6 +1372,7 @@
                         name: 'Corporate Shield',
                         rating: '★★★★★',
                         reviewCount: 203,
+                        locations: ['nairobi', 'kiambu', 'machakos'],
                         services: [
                             { name: 'Enterprise CCTV System', price: '$5,000', description: 'Large-scale business surveillance' },
                             { name: 'Cloud Monitoring Setup', price: '$1,800', description: 'Remote cloud-based monitoring' },
@@ -1237,6 +1386,7 @@
                         name: 'SecureGuard Inc.',
                         rating: '★★★★★',
                         reviewCount: 128,
+                        locations: ['nairobi', 'mombasa', 'kiambu'],
                         services: [
                             { name: 'Residential CCTV', price: '$1,200', description: 'Home surveillance system' },
                             { name: 'Night Vision Systems', price: '$1,800', description: 'Advanced low-light monitoring' },
@@ -1249,6 +1399,101 @@
                 ]
             }
         };
+
+        // Location filter functions
+        function toggleLocationFilter() {
+            const dropdown = document.getElementById('locationDropdown');
+            dropdown.classList.toggle('opacity-0');
+            dropdown.classList.toggle('invisible');
+        }
+
+        function applyLocationFilter() {
+            const countySelect = document.getElementById('countySelect');
+            const mobileCountySelect = document.getElementById('mobileCountySelect');
+            const selectedCounty = countySelect.value || mobileCountySelect.value;
+            
+            if (selectedCounty) {
+                currentLocationFilter = selectedCounty;
+                updateLocationFilterDisplay();
+                applyLocationFilterToContent();
+                showNotification(`Filtering services in ${getCountyName(selectedCounty)}`);
+            }
+        }
+
+        function clearLocationFilter() {
+            currentLocationFilter = '';
+            updateLocationFilterDisplay();
+            applyLocationFilterToContent();
+            showNotification('Location filter cleared');
+        }
+
+        function updateLocationFilterDisplay() {
+            const filterDisplay = document.getElementById('locationFilterDisplay');
+            const activeFilters = document.getElementById('activeLocationFilters');
+            
+            if (currentLocationFilter) {
+                filterDisplay.classList.remove('hidden');
+                activeFilters.innerHTML = `
+                    <span class="location-badge">
+                        ${getCountyName(currentLocationFilter)}
+                        <button onclick="clearLocationFilter()">×</button>
+                    </span>
+                `;
+            } else {
+                filterDisplay.classList.add('hidden');
+                activeFilters.innerHTML = '';
+            }
+        }
+
+        function getCountyName(countyCode) {
+            const countyNames = {
+                'nairobi': 'Nairobi',
+                'mombasa': 'Mombasa',
+                'kisumu': 'Kisumu',
+                'nakuru': 'Nakuru',
+                'kiambu': 'Kiambu',
+                'meru': 'Meru',
+                'kakamega': 'Kakamega',
+                'kisii': 'Kisii',
+                'nyeri': 'Nyeri',
+                'machakos': 'Machakos'
+            };
+            return countyNames[countyCode] || countyCode;
+        }
+
+        function applyLocationFilterToContent() {
+            // Filter vendor belt on homepage
+            const vendorCards = document.querySelectorAll('.vendor-card');
+            vendorCards.forEach(card => {
+                const locations = card.getAttribute('data-locations');
+                if (currentLocationFilter && locations) {
+                    const locationArray = locations.split(',');
+                    if (locationArray.includes(currentLocationFilter)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                } else {
+                    card.style.display = 'block';
+                }
+            });
+
+            // If on vendor services page, re-render with filter
+            const currentPage = document.querySelector('.page-content:not(.hidden)');
+            if (currentPage && currentPage.id === 'vendor-services') {
+                const category = Object.keys(vendorServices).find(cat => 
+                    vendorServices[cat].title === document.querySelector('#vendorServicesContent h1')?.textContent
+                );
+                if (category) {
+                    showVendorServices(category);
+                }
+            }
+
+            // If on search page, re-run search
+            if (currentPage && currentPage.id === 'search') {
+                performSearch();
+            }
+        }
 
         // Mobile menu functionality
         function toggleMobileMenu() {
@@ -1285,15 +1530,31 @@
             const serviceData = vendorServices[category];
             if (!serviceData) return;
             
+            // Filter vendors by location if filter is active
+            const filteredVendors = currentLocationFilter 
+                ? serviceData.vendors.filter(vendor => vendor.locations.includes(currentLocationFilter))
+                : serviceData.vendors;
+            
             const content = document.getElementById('vendorServicesContent');
             content.innerHTML = `
                 <div class="mb-8">
                     <h1 class="text-3xl font-bold text-gray-900 mb-4">${serviceData.title}</h1>
                     <p class="text-gray-600 text-lg">${serviceData.description}</p>
+                    ${currentLocationFilter ? `<p class="text-sm text-gray-500 mt-2">📍 Showing services available in ${getCountyName(currentLocationFilter)}</p>` : ''}
                 </div>
                 
+                ${filteredVendors.length === 0 ? `
+                    <div class="text-center py-12">
+                        <div class="text-6xl mb-4">📍</div>
+                        <h3 class="text-xl font-semibold mb-2">No services found</h3>
+                        <p class="text-gray-600 mb-4">No ${serviceData.title.toLowerCase()} are currently available in ${getCountyName(currentLocationFilter)}.</p>
+                        <button onclick="clearLocationFilter()" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+                            Clear Location Filter
+                        </button>
+                    </div>
+                ` : `
                 <div class="space-y-8">
-                    ${serviceData.vendors.map((vendor, index) => `
+                    ${filteredVendors.map((vendor, index) => `
                         <div class="bg-white rounded-lg shadow-md overflow-hidden">
                             <div class="p-6 border-b">
                                 <div class="flex flex-col md:flex-row md:items-center md:justify-between">
@@ -1302,6 +1563,9 @@
                                         <div class="flex items-center mt-2">
                                             <span class="text-yellow-500">${vendor.rating}</span>
                                             <span class="text-gray-600 ml-2">(${vendor.reviewCount} reviews)</span>
+                                        </div>
+                                        <div class="mt-1">
+                                            <span class="text-xs text-gray-500">📍 Available in: ${vendor.locations.map(loc => getCountyName(loc)).join(', ')}</span>
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
@@ -1341,6 +1605,7 @@
                         </div>
                     `).join('')}
                 </div>
+                `}
             `;
             
             showPage('vendor-services');
@@ -1529,11 +1794,22 @@
             updateCartDisplay();
         }
 
-        // Search functionality
+        // Search functionality with location filter
         function performSearch() {
             const searchInput = document.getElementById('searchInput');
+            const searchCategory = document.getElementById('searchCategory');
+            const searchLocation = document.getElementById('searchLocation');
             const searchResults = document.getElementById('searchResults');
+            
             const query = searchInput ? searchInput.value.toLowerCase() : '';
+            const category = searchCategory ? searchCategory.value : '';
+            const location = searchLocation ? searchLocation.value : '';
+            
+            // Apply location filter from search if specified
+            if (location && !currentLocationFilter) {
+                currentLocationFilter = location;
+                updateLocationFilterDisplay();
+            }
             
             let filteredProducts = products;
             if (query) {
@@ -1541,6 +1817,12 @@
                     product.name.toLowerCase().includes(query) ||
                     product.description.toLowerCase().includes(query) ||
                     product.category.toLowerCase().includes(query)
+                );
+            }
+            
+            if (category) {
+                filteredProducts = filteredProducts.filter(product => 
+                    product.category.toLowerCase().replace(' ', '-') === category
                 );
             }
             
@@ -1602,6 +1884,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             showPage('homepage');
             updateCartDisplay();
+            updateLocationFilterDisplay();
         });
     </script>
 </body>
