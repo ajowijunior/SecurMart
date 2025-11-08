@@ -6,200 +6,436 @@
     <title>SecurMart - Professional Security Services</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            box-sizing: border-box;
-        }
-        .hero-gradient {
-            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
-        }
-        .service-card:hover {
-            transform: translateY(-5px);
-            transition: all 0.3s ease;
-        }
-        .nav-link:hover {
-            color: #dc2626;
-            transition: color 0.2s ease;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-            transition: all 0.3s ease;
-        }
-        .btn-primary:hover {
-            background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
-            transform: translateY(-1px);
-        }
-        
-        /* Vendor Belt Animation */
-        .vendor-belt {
-            display: flex;
-            animation: scroll 30s linear infinite;
-            width: max-content;
-        }
-        
-        .vendor-belt:hover {
-            animation-play-state: paused;
-        }
-        
-        @keyframes scroll {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-        
-        /* Mobile Menu Styles */
-        .mobile-menu {
-            transform: translateX(-100%);
-            transition: transform 0.3s ease-in-out;
-        }
-        
-        .mobile-menu.open {
+    body {
+        box-sizing: border-box;
+    }
+    .hero-gradient {
+        background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+    }
+    .service-card:hover {
+        transform: translateY(-5px);
+        transition: all 0.3s ease;
+    }
+    .nav-link:hover {
+        color: #dc2626;
+        transition: color 0.2s ease;
+    }
+    .btn-primary {
+        background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+        transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+        transform: translateY(-1px);
+    }
+    
+    /* Vendor Belt Animation */
+    .vendor-belt {
+        display: flex;
+        animation: scroll 30s linear infinite;
+        width: max-content;
+    }
+    
+    .vendor-belt:hover {
+        animation-play-state: paused;
+    }
+    
+    @keyframes scroll {
+        0% {
             transform: translateX(0);
         }
-        
-        .hamburger {
-            cursor: pointer;
-            padding: 4px;
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+    
+    /* Mobile Menu Styles */
+    .mobile-menu {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    .mobile-menu.open {
+        transform: translateX(0);
+    }
+    
+    .hamburger {
+        cursor: pointer;
+        padding: 4px;
+    }
+    
+    .hamburger span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background: #374151;
+        margin: 5px 0;
+        transition: 0.3s;
+    }
+    
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+    }
+    
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+    }
+    
+    /* FAQ Styles */
+    .faq-item {
+        border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .faq-question {
+        cursor: pointer;
+        padding: 1.5rem 0;
+        transition: all 0.3s ease;
+    }
+    
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+    
+    .faq-answer.open {
+        max-height: 500px;
+    }
+    
+    /* Location Filter Styles */
+    .location-filter {
+        background: white;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        margin-bottom: 1.5rem;
+    }
+    
+    .location-badge {
+        display: inline-flex;
+        align-items: center;
+        background: #fee2e2;
+        color: #dc2626;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        margin: 0.25rem;
+    }
+    
+    .location-badge button {
+        margin-left: 0.5rem;
+        background: none;
+        border: none;
+        color: #dc2626;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    
+    /* Mobile Search Bar */
+    .mobile-search-bar {
+        display: none;
+        padding: 0.75rem 1rem;
+        background: #f9fafb;
+        border-bottom: 1px solid #e5e7eb;
+    }
+    
+    @media (max-width: 768px) {
+        .mobile-search-bar {
+            display: flex;
         }
         
-        .hamburger span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background: #374151;
-            margin: 5px 0;
-            transition: 0.3s;
+        .hero-gradient {
+            padding: 2rem 0;
         }
         
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(-45deg) translate(-5px, 6px);
+        .hero-gradient h1 {
+            font-size: 2rem;
+            line-height: 1.2;
+            padding: 0 1rem;
         }
         
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
+        .hero-gradient p {
+            font-size: 1rem;
+            padding: 0 1rem;
+            line-height: 1.5;
         }
         
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(45deg) translate(-5px, -6px);
+        .service-card {
+            margin-bottom: 1rem;
+            padding: 1.5rem;
         }
         
-        /* FAQ Styles */
-        .faq-item {
-            border-bottom: 1px solid #e5e7eb;
+        .grid {
+            gap: 1rem;
         }
         
-        .faq-question {
-            cursor: pointer;
-            padding: 1.5rem 0;
-            transition: all 0.3s ease;
+        .max-w-7xl {
+            padding-left: 1rem;
+            padding-right: 1rem;
         }
         
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
+        .text-5xl {
+            font-size: 2rem;
         }
         
-        .faq-answer.open {
-            max-height: 500px;
+        .text-3xl {
+            font-size: 1.5rem;
         }
         
-        /* Location Filter Styles */
-        .location-filter {
-            background: white;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        .text-2xl {
+            font-size: 1.375rem;
+        }
+        
+        .text-xl {
+            font-size: 1.125rem;
+        }
+        
+        .text-lg {
+            font-size: 1rem;
+        }
+        
+        .py-16 {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+        
+        .py-20 {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+        
+        .py-12 {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+        
+        .py-8 {
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+        
+        .px-8 {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+        
+        /* Navigation optimization */
+        .h-16 {
+            height: 4rem;
+        }
+        
+        /* Vendor belt optimization */
+        .vendor-card {
+            width: 280px !important;
+            padding: 1rem !important;
+        }
+        
+        .vendor-card .text-4xl {
+            font-size: 2.5rem;
+        }
+        
+        /* Service cards optimization */
+        .service-card .text-4xl {
+            font-size: 3rem;
+        }
+        
+        /* Search page optimization */
+        .flex-col.gap-4 > * {
+            margin-bottom: 0.75rem;
+        }
+        
+        /* Forms optimization */
+        .space-y-4 > * {
+            margin-bottom: 1rem;
+        }
+        
+        .space-y-6 > * {
             margin-bottom: 1.5rem;
         }
         
-        .location-badge {
-            display: inline-flex;
-            align-items: center;
-            background: #fee2e2;
-            color: #dc2626;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            margin: 0.25rem;
+        .space-y-8 > * {
+            margin-bottom: 2rem;
         }
         
-        .location-badge button {
-            margin-left: 0.5rem;
-            background: none;
-            border: none;
-            color: #dc2626;
-            cursor: pointer;
-            font-weight: bold;
+        /* Button optimization */
+        .btn-primary {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
         }
         
-        /* Mobile Responsive Styles */
-        @media (max-width: 768px) {
-            .hero-gradient {
-                padding: 3rem 0;
-            }
-            
-            .hero-gradient h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero-gradient p {
-                font-size: 1rem;
-                padding: 0 1rem;
-            }
-            
-            .service-card {
-                margin-bottom: 1rem;
-            }
-            
-            .grid {
-                gap: 1rem;
-            }
-            
-            .max-w-7xl {
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
-            
-            .text-5xl {
-                font-size: 2.5rem;
-            }
-            
-            .text-3xl {
-                font-size: 1.875rem;
-            }
-            
-            .py-16 {
-                padding-top: 2rem;
-                padding-bottom: 2rem;
-            }
-            
-            .py-20 {
-                padding-top: 3rem;
-                padding-bottom: 3rem;
-            }
+        /* Cart optimization */
+        .flex.items-center.space-x-3 {
+            gap: 0.5rem;
         }
         
-        @media (max-width: 480px) {
-            .hero-gradient h1 {
-                font-size: 2rem;
-            }
-            
-            .text-xl {
-                font-size: 1rem;
-            }
-            
-            .px-8 {
-                padding-left: 1.5rem;
-                padding-right: 1.5rem;
-            }
+        /* FAQ optimization */
+        .faq-question {
+            padding: 1rem 0;
         }
-    </style>
+        
+        .faq-question h3 {
+            font-size: 1rem;
+            line-height: 1.4;
+            padding-right: 1rem;
+        }
+        
+        /* Profile page optimization */
+        .grid.grid-cols-1.md\\:grid-cols-2.gap-6 {
+            gap: 1rem;
+        }
+        
+        /* Footer optimization */
+        .grid.grid-cols-1.md\\:grid-cols-4.gap-8 {
+            gap: 2rem;
+        }
+        
+        .md\\:col-span-2 {
+            grid-column: span 1;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .hero-gradient h1 {
+            font-size: 1.75rem;
+        }
+        
+        .hero-gradient p {
+            font-size: 0.9rem;
+        }
+        
+        .text-xl {
+            font-size: 1rem;
+        }
+        
+        .text-lg {
+            font-size: 0.9rem;
+        }
+        
+        .px-8 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        
+        .max-w-7xl {
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+        }
+        
+        /* Vendor cards on very small screens */
+        .vendor-card {
+            width: 260px !important;
+            padding: 0.75rem !important;
+        }
+        
+        .vendor-card .text-4xl {
+            font-size: 2rem;
+        }
+        
+        /* Service cards on very small screens */
+        .service-card {
+            padding: 1rem;
+        }
+        
+        .service-card .text-4xl {
+            font-size: 2.5rem;
+        }
+        
+        /* Navigation logo */
+        .text-xl.md\\:text-2xl {
+            font-size: 1.125rem;
+        }
+        
+        /* Mobile menu optimization */
+        .mobile-menu {
+            width: 85vw;
+        }
+        
+        /* Form inputs optimization */
+        input, select, textarea {
+            font-size: 16px !important; /* Prevents zoom on iOS */
+        }
+        
+        /* Button touch targets */
+        button, a {
+            min-height: 44px;
+            min-width: 44px;
+        }
+        
+        /* Cart items optimization */
+        .flex.justify-between.items-center.py-4 {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        
+        .flex.justify-between.items-center.py-4 > div:last-child {
+            align-self: flex-end;
+        }
+        
+        /* Search results optimization */
+        .grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3.gap-6 {
+            gap: 1rem;
+        }
+        
+        /* Why choose us section */
+        .grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-4.gap-8 {
+            gap: 1.5rem;
+        }
+        
+        .text-center .text-3xl {
+            font-size: 2rem;
+        }
+    }
+    
+    @media (max-width: 360px) {
+        .hero-gradient h1 {
+            font-size: 1.5rem;
+        }
+        
+        .hero-gradient p {
+            font-size: 0.85rem;
+        }
+        
+        .vendor-card {
+            width: 240px !important;
+        }
+        
+        .service-card {
+            padding: 0.75rem;
+        }
+        
+        .btn-primary {
+            padding: 0.625rem 1.25rem;
+            font-size: 0.9rem;
+        }
+    }
+    
+    /* Prevent horizontal scrolling */
+    html, body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+    
+    /* Improve touch scrolling */
+    .mobile-menu {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Optimize images and icons for mobile */
+    img, svg {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
 </head>
 <body class="bg-gray-50 font-sans">
-    <!-- Navigation -->
+       <!-- Navigation -->
     <nav class="bg-white shadow-lg sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
@@ -232,14 +468,36 @@
                                 </div>
                             </div>
                             
-                            <a href="#" class="nav-link text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium" onclick="showPage('search')">Search</a>
+                            <!-- Search Dropdown -->
+                            <div class="relative group">
+                                <button class="nav-link text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium flex items-center" onclick="showPage('search')">
+                                    Search
+                                    <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                                <div class="absolute left-0 mt-2 w-80 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-4" id="searchDropdown">
+                                    <h4 class="font-semibold mb-2">Quick Search</h4>
+                                    <div class="space-y-3">
+                                        <input type="text" id="quickSearchInput" placeholder="Search for security services..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                                        <select id="quickSearchCategory" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm">
+                                            <option value="">All Categories</option>
+                                            <option value="guard-dogs">Guard Dogs</option>
+                                            <option value="security-guards">Security Guards</option>
+                                            <option value="surveillance">Surveillance Systems</option>
+                                        </select>
+                                        <button onclick="performQuickSearch()" class="w-full bg-red-600 text-white py-2 rounded-md text-sm hover:bg-red-700">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
                             <a href="#" class="nav-link text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium" onclick="showPage('faq')">FAQs</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Right side - Account management and cart -->
-                <div class="flex items-center space-x-4">
+                <div class="hidden md:flex items-center space-x-4">
                     <!-- Location Filter Button -->
                     <div class="relative group">
                         <button class="nav-link text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium flex items-center" onclick="toggleLocationFilter()">
@@ -270,7 +528,7 @@
                     </div>
 
                     <!-- Cart -->
-                    <a href="#" class="nav-link text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium hidden md:block" onclick="showPage('cart')">
+                    <a href="#" class="nav-link text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium" onclick="showPage('cart')">
                         <div class="flex items-center">
                             <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
@@ -303,24 +561,37 @@
                     </div>
 
                     <!-- Portal Links -->
-                    <div class="hidden md:flex items-center space-x-2 border-l border-gray-300 pl-4">
+                    <div class="flex items-center space-x-2 border-l border-gray-300 pl-4">
                         <a href="vendor.html" class="text-xs text-gray-500 hover:text-red-600">Vendor</a>
                         <a href="admin.html" class="text-xs text-gray-500 hover:text-red-600">Admin</a>
                     </div>
+                </div>
 
-                    <!-- Mobile menu button -->
-                    <div class="flex items-center md:hidden">
-                        <a href="#" class="text-gray-700 hover:text-red-600 mr-3" onclick="showPage('cart')">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                            </svg>
-                        </a>
-                        <button onclick="toggleMobileMenu()" class="hamburger" id="hamburger">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </button>
-                    </div>
+                <!-- Mobile menu button and cart -->
+                <div class="flex items-center md:hidden">
+                    <a href="#" class="text-gray-700 hover:text-red-600 mr-3" onclick="showPage('cart')">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </a>
+                    <button onclick="toggleMobileMenu()" class="hamburger" id="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Search Bar - Second Line for Smartphone View -->
+            <div class="mobile-search-bar">
+                <div class="flex w-full gap-2">
+                    <input type="text" id="mobileSearchInput" placeholder="Search for security services..." class="flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                    <button onclick="performMobileSearch()" class="bg-red-600 text-white px-4 py-2 rounded-md text-sm hover:bg-red-700 flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                        Search
+                    </button>
                 </div>
             </div>
         </div>
@@ -345,8 +616,17 @@
                         <a href="#" onclick="showVendorServices('surveillance'); closeMobileMenu()" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Surveillance Systems</a>
                     </div>
                     
-                    <a href="#" onclick="showPage('search'); closeMobileMenu()" class="block px-4 py-3 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Search</a>
                     <a href="#" onclick="showPage('faq'); closeMobileMenu()" class="block px-4 py-3 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">FAQs</a>
+                    
+                    <!-- Account Section -->
+                    <div class="border-t border-gray-200 pt-2 mt-2">
+                        <p class="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Account</p>
+                        <a href="#" onclick="showPage('profile'); closeMobileMenu()" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">My Profile</a>
+                        <a href="#" onclick="showPage('orders'); closeMobileMenu()" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">My Orders</a>
+                        <a href="#" onclick="showPage('track-order'); closeMobileMenu()" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Track Orders</a>
+                        <a href="#" onclick="showPage('login'); closeMobileMenu()" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Login</a>
+                        <a href="#" onclick="showPage('register'); closeMobileMenu()" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Register</a>
+                    </div>
                     
                     <!-- Location Filter in Mobile Menu -->
                     <div class="border-t border-gray-200 pt-2 mt-2">
@@ -368,16 +648,6 @@
                             <button onclick="applyLocationFilter(); closeMobileMenu();" class="w-full bg-red-600 text-white py-2 rounded-md text-sm hover:bg-red-700 mb-1">Apply Filter</button>
                             <button onclick="clearLocationFilter(); closeMobileMenu();" class="w-full text-gray-600 py-2 rounded-md text-sm hover:bg-gray-100">Clear Filter</button>
                         </div>
-                    </div>
-                    
-                    <!-- Account Section -->
-                    <div class="border-t border-gray-200 pt-2 mt-2">
-                        <p class="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Account</p>
-                        <a href="#" onclick="showPage('profile'); closeMobileMenu()" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">My Profile</a>
-                        <a href="#" onclick="showPage('orders'); closeMobileMenu()" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">My Orders</a>
-                        <a href="#" onclick="showPage('track-order'); closeMobileMenu()" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Track Orders</a>
-                        <a href="#" onclick="showPage('login'); closeMobileMenu()" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Login</a>
-                        <a href="#" onclick="showPage('register'); closeMobileMenu()" class="block px-4 py-2 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-md">Register</a>
                     </div>
                     
                     <div class="border-t border-gray-200 pt-2 mt-2">
@@ -1839,6 +2109,32 @@
             `).join('');
         }
 
+        // Mobile search functionality
+        function performMobileSearch() {
+            const mobileSearchInput = document.getElementById('mobileSearchInput');
+            const query = mobileSearchInput ? mobileSearchInput.value.toLowerCase() : '';
+            
+            if (query) {
+                // Navigate to search page and perform search
+                showPage('search');
+                
+                // Set the search value on the search page
+                setTimeout(() => {
+                    const searchInput = document.getElementById('searchInput');
+                    
+                    if (searchInput && query) {
+                        searchInput.value = query;
+                    }
+                    
+                    // Perform the search
+                    performSearch();
+                }, 100);
+            } else {
+                // If no search criteria, just navigate to search page
+                showPage('search');
+            }
+        }
+
         // Form handlers
         function handleLogin(event) {
             event.preventDefault();
@@ -1878,6 +2174,39 @@
             setTimeout(() => {
                 notification.remove();
             }, 3000);
+        }
+
+        // Quick search functionality
+        function performQuickSearch() {
+            const quickSearchInput = document.getElementById('quickSearchInput');
+            const quickSearchCategory = document.getElementById('quickSearchCategory');
+            
+            const query = quickSearchInput ? quickSearchInput.value.toLowerCase() : '';
+            const category = quickSearchCategory ? quickSearchCategory.value : '';
+            
+            if (query || category) {
+                // Navigate to search page and perform search
+                showPage('search');
+                
+                // Set the search values on the search page
+                setTimeout(() => {
+                    const searchInput = document.getElementById('searchInput');
+                    const searchCategory = document.getElementById('searchCategory');
+                    
+                    if (searchInput && query) {
+                        searchInput.value = query;
+                    }
+                    if (searchCategory && category) {
+                        searchCategory.value = category;
+                    }
+                    
+                    // Perform the search
+                    performSearch();
+                }, 100);
+            } else {
+                // If no search criteria, just navigate to search page
+                showPage('search');
+            }
         }
 
         // Initialize
