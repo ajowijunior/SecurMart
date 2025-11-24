@@ -145,6 +145,14 @@
         border-bottom: 1px solid #e5e7eb;
     }
     
+    /* Desktop Search Bar */
+    .desktop-search-bar {
+        display: none;
+        background: #f9fafb;
+        border-bottom: 1px solid #e5e7eb;
+        padding: 0.75rem 0;
+    }
+    
     /* Fixed mobile search button */
     .mobile-search-button {
         display: flex;
@@ -163,6 +171,12 @@
     
     .mobile-search-button:hover {
         background: #b91c1c;
+    }
+    
+    @media (min-width: 769px) {
+        .desktop-search-bar {
+            display: block;
+        }
     }
     
     @media (max-width: 768px) {
@@ -490,28 +504,8 @@
                                 </div>
                             </div>
                             
-                            <!-- Search Dropdown -->
-                            <div class="relative group">
-                                <button class="nav-link text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium flex items-center" onclick="showPage('search')">
-                                    Search
-                                    <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                    </svg>
-                                </button>
-                                <div class="absolute left-0 mt-2 w-80 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-4" id="searchDropdown">
-                                    <h4 class="font-semibold mb-2">Quick Search</h4>
-                                    <div class="space-y-3">
-                                        <input type="text" id="quickSearchInput" placeholder="Search for security services..." class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-red-500 focus:border-transparent">
-                                        <select id="quickSearchCategory" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm">
-                                            <option value="">All Categories</option>
-                                            <option value="guard-dogs">Guard Dogs</option>
-                                            <option value="security-guards">Security Guards</option>
-                                            <option value="surveillance">Surveillance Systems</option>
-                                        </select>
-                                        <button onclick="performQuickSearch()" class="w-full bg-red-600 text-white py-2 rounded-md text-sm hover:bg-red-700">Search</button>
-                                    </div>
-                                </div>
-                            </div>
+                            <!-- Search Link - Removed dropdown functionality -->
+                            <!-- <a href="#" class="nav-link text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium" onclick="showPage('search')">Search</a> -->
                             
                             <a href="#" class="nav-link text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium" onclick="showPage('faq')">FAQs</a>
                         </div>
@@ -601,6 +595,27 @@
                         <span></span>
                         <span></span>
                     </button>
+                </div>
+            </div>
+            
+            <!-- Desktop Search Bar - Always visible on PC -->
+            <div class="desktop-search-bar">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex gap-2">
+                        <input type="text" id="desktopSearchInput" placeholder="Search for security services..." class="flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                        <select id="desktopSearchCategory" class="px-3 py-2 border border-gray-300 rounded-md text-sm">
+                            <option value="">All Categories</option>
+                            <option value="guard-dogs">Guard Dogs</option>
+                            <option value="security-guards">Security Guards</option>
+                            <option value="surveillance">Surveillance Systems</option>
+                        </select>
+                        <button onclick="performDesktopSearch()" class="bg-red-600 text-white px-4 py-2 rounded-md text-sm hover:bg-red-700 flex items-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            Search
+                        </button>
+                    </div>
                 </div>
             </div>
             
@@ -1032,9 +1047,9 @@
         <!-- Search Page -->
         <div id="search" class="page-content hidden">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <h1 class="text-3xl font-bold text-gray-900 mb-8">Search Security Services</h1>
+                <!-- <h1 class="text-3xl font-bold text-gray-900 mb-8">Search Security Services</h1> -->
                 
-                <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <!-- <div class="bg-white p-6 rounded-lg shadow-md mb-8">
                     <div class="flex flex-col md:flex-row gap-4">
                         <input type="text" id="searchInput" placeholder="Search for security services..." class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
                         <select id="searchCategory" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500">
@@ -1058,7 +1073,7 @@
                         </select>
                         <button onclick="performSearch()" class="btn-primary text-white px-6 py-2 rounded-lg">Search</button>
                     </div>
-                </div>
+                </div> -->
 
                 <div id="searchResults" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- Search results will be populated here -->
@@ -2131,6 +2146,39 @@
             `).join('');
         }
 
+        // Desktop search functionality
+        function performDesktopSearch() {
+            const desktopSearchInput = document.getElementById('desktopSearchInput');
+            const desktopSearchCategory = document.getElementById('desktopSearchCategory');
+            
+            const query = desktopSearchInput ? desktopSearchInput.value.toLowerCase() : '';
+            const category = desktopSearchCategory ? desktopSearchCategory.value : '';
+            
+            if (query || category) {
+                // Navigate to search page and perform search
+                showPage('search');
+                
+                // Set the search values on the search page
+                setTimeout(() => {
+                    const searchInput = document.getElementById('searchInput');
+                    const searchCategory = document.getElementById('searchCategory');
+                    
+                    if (searchInput && query) {
+                        searchInput.value = query;
+                    }
+                    if (searchCategory && category) {
+                        searchCategory.value = category;
+                    }
+                    
+                    // Perform the search
+                    performSearch();
+                }, 100);
+            } else {
+                // If no search criteria, just navigate to search page
+                showPage('search');
+            }
+        }
+
         // Mobile search functionality
         function performMobileSearch() {
             const mobileSearchInput = document.getElementById('mobileSearchInput');
@@ -2196,39 +2244,6 @@
             setTimeout(() => {
                 notification.remove();
             }, 3000);
-        }
-
-        // Quick search functionality
-        function performQuickSearch() {
-            const quickSearchInput = document.getElementById('quickSearchInput');
-            const quickSearchCategory = document.getElementById('quickSearchCategory');
-            
-            const query = quickSearchInput ? quickSearchInput.value.toLowerCase() : '';
-            const category = quickSearchCategory ? quickSearchCategory.value : '';
-            
-            if (query || category) {
-                // Navigate to search page and perform search
-                showPage('search');
-                
-                // Set the search values on the search page
-                setTimeout(() => {
-                    const searchInput = document.getElementById('searchInput');
-                    const searchCategory = document.getElementById('searchCategory');
-                    
-                    if (searchInput && query) {
-                        searchInput.value = query;
-                    }
-                    if (searchCategory && category) {
-                        searchCategory.value = category;
-                    }
-                    
-                    // Perform the search
-                    performSearch();
-                }, 100);
-            } else {
-                // If no search criteria, just navigate to search page
-                showPage('search');
-            }
         }
 
         // Initialize
